@@ -32,6 +32,7 @@ void* allocate(size_t size) {
 GameData main_state = {
     .win={.x=0,.y=0,.w=WINDOW_W,.h=WINDOW_H}
 };
+
 void raylib_start(void){
     srand(time(NULL));
     heap = malloc(HEAP_SIZE);

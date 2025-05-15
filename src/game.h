@@ -4,28 +4,51 @@
 
 typedef enum {
     Nord,
-    Dark_Elf, // Can only wear eleven(white yellow) armor and weapons
+    Dark_Elf, // Can only wear elven(white yellow) armor and weapons
     Redguard,
-    Orc // Orcs can only wear green cloths or Orchish(blue) armor 
+    Orc, // Orcs can only wear green cloths or Orchish(blue) armor 
+    Race_Max
 } Race;
 
 typedef enum {
     Dawnguard, // Mix armors, only purple colors for cloths or armor
     Forsworm, //Only wear light armor, no citizens. only colors close to beige for cloths or armor
     BrotherhoodOfSteel, // Only wear heavy armor, no citizens. Colors don't matter.
-    Imperials // Mix armors, only red colors for cloths or armor
+    Imperials, // Mix armors, only red colors for cloths or armor
+    Faction_Max
 } Factions;
 
 typedef enum {
     Citizen, // Can only have small axes or bows as weapons
     Merchant, // Pacifistes, so no weapon equipped
-    Soldier // Any weapon
+    Soldier, // Any weapon
+    SocialStatus_Max
 } SocialStatus;
+
+typedef enum {
+    YellowArmor,
+    WhiteArmor,
+    GreenArmor,
+    PurpleArmor,
+    RedArmor,
+    BeigeArmor,
+    Armors_Max
+}Armors;
+
+typedef enum {
+    Bow,
+    SmallAxe,
+    Sword,
+    ElvenScimitar,
+    Weapons_Max
+}Weapons;
 
 typedef struct {
     Race race;
     Factions faction;
     SocialStatus status;
+    Weapons weapons;
+    Armors armors;
 } Classe;
 
 typedef struct {
@@ -34,10 +57,10 @@ typedef struct {
     int is_weapon;
     int is_armor;
     int is_equipped;
-} Items;
+} Item;
 
 typedef struct {
-    Items items;
+    Item* items;
     size_t count;
     size_t capacity;
 } Inventory;
@@ -68,7 +91,7 @@ typedef enum {
 }Game_State;
 
 typedef struct {
-    Items* items;
+    Item* items;
     size_t count;
     size_t capacity;
     int ggbucks_amount;
@@ -90,11 +113,14 @@ typedef struct {
 
 typedef struct Texture Texture;
 
+typedef struct sqlite3;
+
 typedef struct {
     Game_State state;
     Client customer;
     WinRect win;
     Texture* img;
+    struct sqlite3* db;
     #ifdef _DEBUG
     int debug;
     #endif
@@ -109,3 +135,4 @@ void game_end(GameData* g);
 
 void ui_main_menu(GameData* g);
 void ui_create_char(GameData* g);
+void ui_store_call(GameData* g);
